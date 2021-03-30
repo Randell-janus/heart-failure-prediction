@@ -9,7 +9,7 @@ from sklearn.model_selection import train_test_split
 def app():
     st.sidebar.subheader('User Input Features')
     
-    df = pd.read_csv('heart_failure_clinical_records_dataset.csv')
+    df = pd.read_csv('apps/heart_failure_clinical_records_dataset.csv')
     X = df.drop('DEATH_EVENT', axis=1)
     y = df['DEATH_EVENT']
     X_train, X_test, y_train, y_test = train_test_split(X,y, test_size = 0.2, random_state = 0)
