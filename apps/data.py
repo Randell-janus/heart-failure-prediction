@@ -3,7 +3,7 @@ import pandas as pd
 import altair as alt 
 
 def app():
-    df = pd.read_csv(r'C:\Users\user\rjn-python\streamlit\Heart Failure Prediction\heart_failure_clinical_records_dataset.csv')
+    df = pd.read_csv('heart_failure_clinical_records_dataset.csv')
     about_expander = st.beta_expander('About',expanded=True)
     with about_expander:
         st.write("""
