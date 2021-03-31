@@ -68,7 +68,7 @@ def app():
     user_result = classifier.predict(user_data)
     
     st.title('')
-    st.subheader('**Conclusion:**')
+    st.subheader('**Conclusion**')
     pred_button = st.button('Predict')
     if pred_button:
         if user_result[0] == 0:
