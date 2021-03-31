@@ -14,7 +14,7 @@ def app():
                 mortality by heart failure.
              """)
     
-    st.subheader('**Explore the dataset**')
+    st.subheader('**Explore the dataset!**')
     col1, col2 = st.beta_columns(2)
     selectbox_options = col1.selectbox('Transform', ['Head','Tail', 
                                                      'Describe','Shape', 
