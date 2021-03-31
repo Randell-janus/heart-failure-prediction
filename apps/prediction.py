@@ -32,7 +32,7 @@ def app():
         if anaemia:
             anaemia = 1
             
-        age = st.sidebar.slider('Age', 40, 95, 60)
+        age = st.sidebar.slider('Age/', 40, 95, 60)
         ejection_fraction = st.sidebar.slider('Ejection Fraction', 14, 80, 38)
         serum_sodium = st.sidebar.slider('Serum Sodium', 113, 148, 136)
         
