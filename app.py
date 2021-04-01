@@ -1,8 +1,9 @@
 import streamlit as st
-import pandas as pd 
-import altair as alt 
 import numpy as np
+import pandas as pd 
+import altair as alt
 
+from PIL import Image
 from sklearn.metrics import accuracy_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
@@ -19,9 +20,10 @@ app = st.sidebar.selectbox('', ['Explore Data', 'Predict Mortality', 'Citation']
 df = pd.read_csv('heart_failure_clinical_records_dataset.csv')
 
 if app == 'Explore Data':
-    
     about_expander = st.beta_expander('About',expanded=True)
     with about_expander:
+        img = Image.open('heartattack.jpg')
+        st.image(img)
         st.write("""
                 Cardiovascular diseases (CVDs) are the **number 1 cause of death** globally, 
                 taking an estimated 17.9 million lives each year, which accounts for 31 
@@ -34,7 +36,7 @@ if app == 'Explore Data':
     col1, col2 = st.beta_columns(2)
     selectbox_options = col1.selectbox('Transform', ['Head','Tail', 
                                                         'Describe','Shape', 
-                                                        'DTypes', 'Default'])
+                                                        'DTypes', 'Value Count'])
     if selectbox_options == 'Head':
         input_count = col2.number_input('Count', 5, 50, help='min=5, max=50')
         st.write(df.head(input_count))
@@ -48,9 +50,7 @@ if app == 'Explore Data':
         st.write('Shape: ', df.shape)
     elif selectbox_options == 'DTypes':
         st.write(df.dtypes)
-    else:
-        st.write(df.sort_index())
-        
+    
     st.write('---')
     numeric_df = df.select_dtypes(['float64', 'int64'])
     numeric_cols = numeric_df.columns
@@ -82,24 +82,52 @@ if app == 'Explore Data':
     graph_hgt = col1.slider('Height', 200, 600, 400, step=10)
     graph_wgt = col2.slider('Width',400, 800, 600, step=10)
         
-    df = df.loc[(df.creatinine_phosphokinase < 800) & (df.platelets < 500000) 
-        & (df.serum_creatinine < 2.2) & (df.age >= 40)]
+    df = df.loc[(df.creatinine_phosphokinase < 800) & (df.platelets < 500000) & 
+                (df.serum_creatinine < 2.2) & (df.age >= 40)]
 
     chart = alt.Chart(data=df, mark=select_graph).encode(alt.X(x_axis, scale=alt.Scale(zero=False)), 
                                                             alt.Y(y_axis, scale=alt.Scale(zero=False)),color=label).properties(
         height=graph_hgt,width=graph_wgt)
     st.write(chart)
+    
+    if y_axis == 'age' and x_axis == 'platelets' and label == 'DEATH_EVENT':
+        st.write('Majority of deceased patients had platelet count ranging from 150,000 - 300,000 and aged 58 - 75')
+    elif y_axis == 'age' and x_axis == 'creatinine_phosphokinase' and label == 'DEATH_EVENT':
+        st.write('Majority of deceased patients had creatinine phosphokinase count ranging from 100 - 250 and aged 55 - 70')
+    elif y_axis == 'age' and x_axis == 'serum_creatinine' and label == 'DEATH_EVENT':
+        st.write('Majority of deceased patients had serum creatinine count ranging from 1.2 - 1.9 and aged 50 - 75')
+    elif y_axis == 'age' and x_axis == 'serum_sodium' and label == 'DEATH_EVENT':
+        st.write('Majority of deceased patients had serum sodium count ranging from 134 - 140 and aged 55 - 80')
+    
+    elif y_axis == 'ejection_fraction' and x_axis == 'platelets' and label == 'DEATH_EVENT':
+        st.write('Majority of deceased patients had platelet count ranging from 150,000 - 250,000 and ejection fraction count of 10 - 30') 
+    elif y_axis == 'ejection_fraction' and x_axis == 'creatinine_phosphokinase' and label == 'DEATH_EVENT':
+        st.write('Majority of deceased patients had creatinine phosphokinase count ranging from 50 - 175 and ejection fraction count of 20 - 30') 
+    elif y_axis == 'ejection_fraction' and x_axis == 'serum_creatinine' and label == 'DEATH_EVENT':
+        st.write('Majority of deceased patients had serum creatinine count ranging from 1.8 - 2 and ejection fraction count of 20 - 40') 
+    elif y_axis == 'ejection_fraction' and x_axis == 'serum_sodium' and label == 'DEATH_EVENT':
+        st.write('Majority of deceased patients had serum_sodium count ranging from 134 - 138 and ejection fraction count of 20 - 40') 
+        
+    elif y_axis == 'time' and x_axis == 'platelets' and label == 'DEATH_EVENT':
+        st.write('Majority of deceased patients had platelet count ranging from 150,000 - 350,000 and a follow up time of less than 50 days') 
+    elif y_axis == 'time' and x_axis == 'creatinine_phosphokinase' and label == 'DEATH_EVENT':
+        st.write('Majority of deceased patients had creatinine phosphokinase count ranging from 50 - 250, 550 - 600, and a follow up time of less than 50 days') 
+    elif y_axis == 'time' and x_axis == 'serum_creatinine' and label == 'DEATH_EVENT':
+        st.write('Majority of deceased patients had serum creatinine count ranging from 0.9 - 1.5 and follow up time of less than 50 days') 
+    elif y_axis == 'time' and x_axis == 'serum_sodium' and label == 'DEATH_EVENT':
+        st.write('Majority of deceased patients had serum_sodium count ranging from 134 - 140 and follow up time of less than 100 days') 
+        
 
 elif app == 'Predict Mortality':
     st.sidebar.subheader('User Input Features')
 
-    #df = pd.read_csv('heart_failure_clinical_records_dataset.csv')
+    df = pd.read_csv('heart_failure_clinical_records_dataset.csv')
     X = df.drop('DEATH_EVENT', axis=1)
     y = df['DEATH_EVENT']
     X_train, X_test, y_train, y_test = train_test_split(X,y, test_size = 0.2, random_state = 0)
 
     def user_input_features():
-        display = ("Male (0)", "Female (1)")
+        display = ("Female (0)", "Male (1)")
         options = list(range(len(display)))
         sex = st.sidebar.radio("Sex", options, format_func=lambda x: display[x])
 
@@ -162,9 +190,6 @@ elif app == 'Predict Mortality':
 
 else:
     st.header('**References/Citation**')
-    st.markdown("""
-    This multi-page app is using the [streamlit-multiapps](https://github.com/upraneelnihar/streamlit-multiapps) framework developed by [Praneel Nihar](https://medium.com/@u.praneel.nihar). You may check out his [Medium article](https://medium.com/@u.praneel.nihar/building-multi-page-web-app-using-streamlit-7a40d55fa5b4).
-    """)
     st.subheader('**Dataset**')
     st.write('The dataset is from user **Larxel** of Kaggle')
     st.write('Davide Chicco, Giuseppe Jurman: Machine learning can predict survival of patients with heart failure from serum creatinine and ejection fraction alone. BMC Medical Informatics and Decision Making 20, 16 (2020).')
