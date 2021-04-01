@@ -3,11 +3,9 @@
 https://share.streamlit.io/randell-janus/heart-failure-prediction/main/app.py  
   
 ## Dataset  
----  
 The dataset is from Kaggle. The authors are Davide Chicco and Giuseppe Jurman: Machine learning can predict survival of patients with heart failure from serum creatinine and ejection fraction alone. BMC Medical Informatics and Decision Making 20, 16 (2020).  
   
 ## Web App Features  
----  
 * Sidebar Directory  
   * Explore Data  
     * About information on Heart Failure.  
