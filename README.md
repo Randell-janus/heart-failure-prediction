@@ -1,32 +1,15 @@
 # Heart Failure Prediction
-#### Machine learning Streamlit web app to predict mortality caused by Heart Failure
-https://share.streamlit.io/randell-janus/heart-failure-prediction/main/app.py  
-  
-  
-![](heartattack.jpg)
-  
+A Machine learning web app made with **Streamlit**
+- https://share.streamlit.io/randell-janus/heart-failure-prediction/main/app.py  
+- Deployed via [Streamlit Sharing](https://streamlit.io/sharing)
 
-## Dataset Source  
+## About
+Predicts mortality caused by Heart Failure with the use of a Random Forest Classifier model
+  
+### Dataset Source  
 The dataset is from Kaggle. The authors are Davide Chicco and Giuseppe Jurman: Machine learning can predict survival of patients with heart failure from serum creatinine and ejection fraction alone. BMC Medical Informatics and Decision Making 20, 16 (2020).  
 
-## Model Used
-* Random Forest Classifier
-
-## Web App Features  
-**Made with Streamlit**
-* Sidebar Directory  
-  * Explore Data  
-    * About information on Heart Failure.  
-    * Dataset exploration with selected pandas functions.
-    * Multiselect box feature for specific column comparison.
-    * Visualization area with customizable axes and plot types.
-  * Predict Mortality  
-    * User input features on sidebar (check boxes, radio buttons, sliders, and number inputs).   
-    * Dataframe base on the user inputs.   
-    * Conclusion button to predict the mortality. 
-  * Citation
-    * Dataset source
-## Predictor Values
+### Predictor Values
 * age - Age of patient
 * anaemia - Decrease of red blood cells or hemoglobin (boolean)  
 * creatinine_phosphokinase - Level of the CPK enzyme in the blood (mcg/L)  
@@ -39,6 +22,17 @@ The dataset is from Kaggle. The authors are Davide Chicco and Giuseppe Jurman: M
 * sex - male (1) or female (0) (binary)
 * smoking - If the patient smokes or not (boolean)
 * time - Follow-up period (days)  
-## Predicted Value
+
+### Predicted Value
 * DEATH_EVENT - If the patient deceased during the follow-up period (boolean)
-    
+
+## Web App Features  
+- Provides dataframe exploration
+- Configurable visualization settings
+- Interactive widgets for customizing predictor values
+
+## Views
+- Home page![](https://github.com/Randell-janus/heart-failure-prediction/blob/main/public/home.JPG)
+- Data exploration![](https://github.com/Randell-janus/heart-failure-prediction/blob/main/public/data%20exploration.JPG)
+- Data visualization![](https://github.com/Randell-janus/heart-failure-prediction/blob/main/public/visualization.JPG)
+- Main page![](https://github.com/Randell-janus/heart-failure-prediction/blob/main/public/main.JPG)
